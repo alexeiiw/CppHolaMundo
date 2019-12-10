@@ -1,5 +1,5 @@
 #include <iostream>
 
 int main() {
-	std::cout<< "Hola Mundo AG" << std::endl;
+	std::cout<< "Hola Mundo Alex García" << std::endl;
 }
