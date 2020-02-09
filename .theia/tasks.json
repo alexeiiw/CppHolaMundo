@@ -1,0 +1,22 @@
+{
+    "tasks": [
+        {
+            "type": "che",
+            "label": "build",
+            "command": "g++ -g Prueba.cpp -o Prueba.out && echo \"Build complete\"",
+            "target": {
+                "workingDir": "CPPHOLAMUNDO",
+                "component": "cpp-dev"
+            }
+        },
+        {
+            "type": "che",
+            "label": "run",
+            "command": "./Prueba.out",
+            "target": {
+                "workingDir": "CPPHOLAMUNDO",
+                "component": "cpp-dev"
+            }
+        }
+    ]
+}
