@@ -1,4 +1,0 @@
-{
-    "clangd.path": "/usr/bin/clangd",
-    "cdt.clangd.binaries.enable": false
-}
