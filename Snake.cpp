@@ -1,7 +1,8 @@
 #include <iostream>
-#include <curses.h>
-#include <sys/ioctl.h>
-#include <termios.h>
+#include <conio.h>
+#include <windows.h>
+//#include <sys/ioctl.h>
+//#include <termios.h>
 //#include <termios.h>
 //#include <unistd.h>
 //#include <fcntl.h>
@@ -13,37 +14,22 @@ bool gameOver;
 const int width = 20;
 const int height = 20;
 int x, y, fruitX, fruitY, score;
-enum eDirection {STOP, LEFT, RIGHT, UP, DOWN};
+enum eDirection {STOP = 0, LEFT, RIGHT, UP, DOWN};
 eDirection dir; 
 
 // declara las funciones
-bool kbhit()
-{
-    termios term;
-    tcgetattr(0, &term);
-
-    termios term2 = term;
-    term2.c_lflag &= ~ICANON;
-    tcsetattr(0, TCSANOW, &term2);
-
-    int byteswaiting;
-    ioctl(0, FIONREAD, &byteswaiting);
-
-    tcsetattr(0, TCSANOW, &term);
-
-    return byteswaiting > 0;
-}
-
 void Setup() {
     gameOver = false;
     dir = STOP;
     x = width / 2;
     y = height / 2;
+    fruitX = rand() % width;
+    fruitY = rand() % height;
     score = 0;  
 }
 
 void Draw() {
-    system("clear");
+    system("cls");
     for (int i = 0; i < width+2; i++)
         cout << "#";
     cout << endl;
@@ -73,21 +59,60 @@ void Draw() {
     cout << "Score: " << score << endl;    
 }
 
-void Input() {
-    //enable_raw_mode();
-    if (kbhit()) {
-        switch (getch()) {
-            case 'x':
-                gameOver = true;
-                break;
-        }
-    }
-    //disable_raw_mode;
-    //tcflush(0, TCIFLUSH);
+void Input()
+{
+	if (_kbhit())
+	{
+		switch (_getch())
+		{
+		case 'a':
+			dir = LEFT;
+			break;
+		case 'd':
+			dir = RIGHT;
+			break;
+		case 'w':
+			dir = UP;
+			break;
+		case 's':
+			dir = DOWN;
+			break;
+		case 'x':
+			gameOver = true;
+			break;
+		}
+	}
 }
 
 void Logic() {
+switch (dir)
+    {
+    case LEFT:
+        x--;
+        break;
+    case RIGHT:
+        x++;
+        break;
+    case UP:
+        y--;
+        break;
+    case DOWN:
+        y++;
+        break;
+    default:
+        break;
+    }
 
+    if (x >= width) x = 0; else if (x < 0) x = width - 1;
+    if (y >= height) y = 0; else if (y < 0) y = height - 1;
+
+    if (x == fruitX && y == fruitY)
+    {
+        score += 10;
+        fruitX = rand() % width;
+        fruitY = rand() % height;
+        //nTail++;
+    }
 }
 
 int main() {
@@ -96,7 +121,7 @@ int main() {
         Draw();
         Input();
         Logic();
-        //sleep(10);
+        Sleep(10);
     }
 
     return 0;
