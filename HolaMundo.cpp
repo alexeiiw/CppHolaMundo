@@ -7,7 +7,7 @@ using namespace std;
 int main() {
  
     // Hola Mundo
-    cout<<"Hola Mundo 3 desde codespaces"<<endl;
+    cout<<"Hola Mundo 3 desde codespaces y desde linux"<<endl;
  
     return 0;
 }
